@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCHgXloQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Weather App</h1>
+            <p id="currentDate"></p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="cityInput" placeholder="Enter city name">
+            <button id="searchBtn" aria-label="Search weather"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <div id="weatherCard" class="weather-card hidden">
+            <p class="location" id="cityName"></p>
+            <div class="weather-main">
+                <img id="weatherIcon" src="" alt="Weather icon" class="weather-icon">
+                <p class="temperature"><span id="temperature"></span></p>
+                <p class="conditions" id="conditions"></p>
+            </div>
+            <div class="details">
+                <div class="detail-item">
+                    <i class="fas fa-water icon-small"></i>
+                    <p class="label">Humidity</p>
+                    <p class="value" id="humidity"></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-wind icon-small"></i>
+                    <p class="label">Wind Speed</p>
+                    <p class="value" id="wind"></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-tachometer-alt icon-small"></i>
+                    <p class="label">Pressure</p>
+                    <p class="value" id="pressure"></p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="errorContainer" class="error-container hidden"></div>
+
+        <div class="loader">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    
+    <script src="/script.js"></script>
+</body>
+</html>
