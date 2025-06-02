@@ -16,7 +16,13 @@
 
         <div class="search-container">
             <input type="text" id="cityInput" placeholder="Enter city name">
-            <button id="searchBtn" aria-label="Search weather"><i class="fas fa-search"></i></button>
+            <button id="searchBtn" aria-label="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="8" stroke="white" stroke-width="2"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+              
         </div>
         
         <div id="weatherCard" class="weather-card hidden">
@@ -34,12 +40,12 @@
                 </div>
                 <div class="detail-item">
                     <i class="fas fa-wind icon-small"></i>
-                    <p class="label">Wind Speed</p>
+                    <p class="label">Conditions</p>
                     <p class="value" id="wind"></p>
                 </div>
                 <div class="detail-item">
                     <i class="fas fa-tachometer-alt icon-small"></i>
-                    <p class="label">Pressure</p>
+                    <p class="label">Description</p>
                     <p class="value" id="pressure"></p>
                 </div>
             </div>

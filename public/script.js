@@ -45,9 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
       errorContainer.classList.add('hidden');
       
       try {
-        // You'll need to replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
-        // and set up a backend endpoint (e.g., /api/weather) to avoid exposing your API key
-        // directly in client-side code.
         const response = await fetch(`/api/weather?city=${encodeURIComponent(cityToFetch)}`);
         const data = await response.json();
         
@@ -67,18 +64,35 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayWeather(data) {
       // Update all fields
       cityName.textContent = `${data.city}, ${data.country}`;
-      temperature.textContent = Math.round(data.temperature);
-      conditions.textContent = data.conditions;
-      humidity.textContent = `${data.humidity}%`;
-      
-      // Add wind and pressure if available
-      wind.textContent = data.wind ? `${data.wind.speed} km/h` : 'N/A';
-      pressure.textContent = data.pressure ? `${data.pressure} hPa` : 'N/A';
-      
-      // Set weather icon
-      weatherIcon.src = `https://openweathermap.org/img/wn/${data.icon}@4x.png`;
-      weatherIcon.alt = data.description;
-      
+      temperature.textContent = `${Math.round(data.temperature)}°C`;
+      conditions.textContent = data.conditions ?? 'N/A';
+
+      // Humidity
+      humidity.textContent = (data.humidity !== undefined && data.humidity !== null)
+        ? `${data.humidity}%`
+        : 'N/A';
+
+      // Wind
+      wind.textContent = (data.conditions !== undefined && data.conditions !== null)
+        ? `${data.conditions}`
+        : 'N/A';
+
+      // Pressure
+      pressure.textContent = (data.description !== undefined && data.description !== null)
+        ? `${data.description}`
+        : 'N/A';
+
+      // Set weather icon (fallback if missing)
+      if (data.icon) {
+        weatherIcon.src = `https://openweathermap.org/img/wn/${data.icon}@4x.png`;
+        weatherIcon.alt = data.description ?? data.conditions ?? 'Weather icon';
+        weatherIcon.classList.remove('hidden');
+      } else {
+        weatherIcon.src = '';
+        weatherIcon.alt = '';
+        weatherIcon.classList.add('hidden');
+      }
+
       // Show card with animation
       weatherCard.classList.add('visible');
     }

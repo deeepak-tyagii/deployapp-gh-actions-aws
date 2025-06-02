@@ -1,24 +1,3 @@
-require('dotenv').config();
-const express = require('express');
-const axios = require('axios');
-const cors = require('cors');
-const path = require('path');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-// OpenWeatherMap API Config
-const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
-if (!OPENWEATHER_API_KEY) {
-    console.error('Missing OPENWEATHER_API_KEY in environment variables');
-    process.exit(1);
-}
-
 // Weather endpoint
 app.get('/api/weather', async (req, res) => {
     const { city } = req.query;
@@ -37,6 +16,11 @@ app.get('/api/weather', async (req, res) => {
             country: response.data.sys.country,
             temperature: response.data.main.temp,
             humidity: response.data.main.humidity,
+            pressure: response.data.main.pressure, // Add pressure
+            wind: {
+                speed: response.data.wind.speed,   // Add wind speed
+                deg: response.data.wind.deg        // Add wind direction (optional)
+            },
             conditions: response.data.weather[0].main,
             description: response.data.weather[0].description,
             icon: response.data.weather[0].icon
@@ -51,13 +35,4 @@ app.get('/api/weather', async (req, res) => {
             res.status(500).json({ error: 'Failed to fetch weather data' });
         }
     }
-});
-
-// Serve frontend
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
 });
