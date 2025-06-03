@@ -60,7 +60,8 @@ app.get('/', (req, res) => {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-    res.status(200).send('OK');
+    res.sendStatus(200);
+    console.log(`[Version ${process.version}]: New request => http://${req.hostname}:${PORT}${req.url}`);
 });
 
 // Listen on 0.0.0.0 to allow external access
