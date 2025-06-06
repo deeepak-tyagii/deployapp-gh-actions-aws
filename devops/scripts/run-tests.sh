@@ -40,7 +40,7 @@ log "Starting test script..."
 
 log "Logging in to Amazon ECR..."
 aws --version
-echo $AWS_ACCOUNT_ID
+
 aws ecr get-login-password --region "$REGION" | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com"
 
 REPOSITORY_URI="$AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO_NAME"
@@ -52,19 +52,18 @@ docker pull "$REPOSITORY_URI:$IMAGE_TAG"
 cleanup
 
 log "Starting container $CONTAINER_NAME on port $APP_PORT..."
-echo $OPENWEATHER_API_KEY
-echo $PORT
+
 docker run -d -p  "$APP_PORT:3000" -e OPENWEATHER_API_KEY -e PORT --name "$CONTAINER_NAME" "$REPOSITORY_URI:$IMAGE_TAG"
 
 log "Waiting for app to start..."
 sleep 10
-curl http://localhost:3000/health
+curl http://localhost:3000/health || error_exit $? "Health check failed."
 
 log "Installing Cypress and reporters..."
 npm install cypress mochawesome --save-dev
 
 log "Running Cypress tests..."
-npx cypress run --config baseUrl="$CYPRESS_BASE_URL" --reporter mochawesome || TEST_EXIT_CODE=$?
+npx cypress run --config baseUrl="$CYPRESS_BASE_URL" --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true || TEST_EXIT_CODE=$?
 
 log "Tests completed. Cleaning up container..."
 cleanup
