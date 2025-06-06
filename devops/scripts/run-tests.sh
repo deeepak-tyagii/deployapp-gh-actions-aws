@@ -63,7 +63,7 @@ log "Installing Cypress and reporters..."
 npm install --save-dev
 
 log "Running Cypress tests..."
-npm run test
+npm run test || TEST_EXIT_CODE=$?
 
 log "generating test report..."
 npm run report

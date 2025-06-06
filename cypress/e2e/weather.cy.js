@@ -9,7 +9,7 @@ describe('Weather App UI', () => {
     });
   
     it('Validates the page header', () => {
-      cy.get('h1').should('contain', data.pageHeader);
+      cy.get('h1').should('contain', data.pageHeader+'w');
     })
     it('Loads default city (New York)', () => {
       cy.get('#weatherCard').should('be.visible');
