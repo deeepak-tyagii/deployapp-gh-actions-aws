@@ -63,7 +63,8 @@ log "Installing Cypress and reporters..."
 npm install --save-dev
 
 log "Running Cypress tests..."
-npm run test || TEST_EXIT_CODE=$?
+npm run test
+TEST_EXIT_CODE=$?
 
 # Save exit code to a file
 echo $TEST_EXIT_CODE > test-exit-code.txt
