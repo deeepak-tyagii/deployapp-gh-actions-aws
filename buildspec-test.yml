@@ -7,7 +7,6 @@ phases:
   install:
     runtime-versions:
       nodejs: 18
-      docker: 20
   pre_build:
     commands:
       - echo Running tests script...
