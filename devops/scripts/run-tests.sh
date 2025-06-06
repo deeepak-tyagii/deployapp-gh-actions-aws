@@ -60,11 +60,13 @@ sleep 10
 curl http://localhost:3000/health || error_exit $? "Health check failed."
 
 log "Installing Cypress and reporters..."
-npm install cypress mochawesome --save-dev
+npm install --save-dev
 
 log "Running Cypress tests..."
-npx cypress run --config baseUrl="$CYPRESS_BASE_URL" --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true || TEST_EXIT_CODE=$?
-cat cypress/reports/mochawesome.html
+npm run test
+
+log "generating test report..."
+npm run report
 
 log "Tests completed. Cleaning up container..."
 cleanup
