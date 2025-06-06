@@ -14,5 +14,4 @@ phases:
 
 artifacts:
   files:
-    - cypress/reports/mochawesome.html
-    - cypress/reports/mochawesome.json
+    - cypress/reports/**/*
