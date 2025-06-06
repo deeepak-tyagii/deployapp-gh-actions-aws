@@ -15,3 +15,10 @@ phases:
 artifacts:
   files:
     - report.html
+
+eports:
+  CypressReports:
+    files:
+      - report.html
+    base-directory: .
+    discard-paths: yes
