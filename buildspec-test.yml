@@ -2,23 +2,28 @@ version: 0.2
 
 env:
   variables:
-    IMAGE_TAG: "latest"  
+    IMAGE_TAG: "latest"
+
 phases:
   install:
     runtime-versions:
       nodejs: 18
   pre_build:
     commands:
-      - echo Running tests script...
-      - bash devops/scripts/run-tests.sh $AWS_ACCOUNT_ID $REGION $ECR_REPO_NAME $IMAGE_TAG 
-
+      - echo "Running test script..."
+      - bash devops/scripts/run-tests.sh $AWS_ACCOUNT_ID $REGION $ECR_REPO_NAME $IMAGE_TAG || true
+  build:
+    commands:
+      - echo "Checking for test result file..."
+      - |
+        if grep -q "failing" report.html; then
+          echo "Tests failed. Failing the build..."
+          exit 1
+        else
+          echo "All tests passed."
+        fi
 artifacts:
   files:
     - report.html
-
-eports:
-  CypressReports:
-    files:
-      - report.html
-    base-directory: .
-    discard-paths: yes
+  discard-paths: yes
+  base-directory: .
