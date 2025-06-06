@@ -11,19 +11,12 @@ phases:
   pre_build:
     commands:
       - echo "Running test script..."
-      - bash devops/scripts/run-tests.sh $AWS_ACCOUNT_ID $REGION $ECR_REPO_NAME $IMAGE_TAG || true
+      - bash devops/scripts/run-tests.sh $AWS_ACCOUNT_ID $REGION $ECR_REPO_NAME $IMAGE_TAG
   build:
     commands:
-      - echo "Checking for test result file..."
-      - |
-        if grep -q "failing" report.html; then
-          echo "Tests failed. Failing the build..."
-          exit 1
-        else
-          echo "All tests passed."
-        fi
+      - echo "Checking Cypress test exit code..."
+      - EXIT_CODE=$(cat test-exit-code.txt)
+      - if [ "$EXIT_CODE" -ne 0 ]; then echo "Tests failed"; exit 1; fi
 artifacts:
   files:
     - report.html
-  discard-paths: yes
-  base-directory: .

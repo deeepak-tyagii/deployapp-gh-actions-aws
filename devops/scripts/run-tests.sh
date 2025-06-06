@@ -65,15 +65,14 @@ npm install --save-dev
 log "Running Cypress tests..."
 npm run test || TEST_EXIT_CODE=$?
 
+# Save exit code to a file
+echo $TEST_EXIT_CODE > test-exit-code.txt
+
 log "generating test report..."
 npm run report
 
 log "Tests completed. Cleaning up container..."
 cleanup
-
-if [[ "${TEST_EXIT_CODE:-0}" -ne 0 ]]; then
-  error_exit "$TEST_EXIT_CODE" "Cypress tests failed."
-fi
 
 log "Test script finished successfully."
 exit 0
