@@ -52,10 +52,13 @@ docker pull "$REPOSITORY_URI:$IMAGE_TAG"
 cleanup
 
 log "Starting container $CONTAINER_NAME on port $APP_PORT..."
+echo $OPENWEATHER_API_KEY
+echo $PORT
 docker run -d -p  "$APP_PORT:3000" -e OPENWEATHER_API_KEY -e PORT --name "$CONTAINER_NAME" "$REPOSITORY_URI:$IMAGE_TAG"
 
 log "Waiting for app to start..."
-sleep 5
+sleep 10
+curl http://localhost:3000/health
 
 log "Installing Cypress and reporters..."
 npm install cypress mochawesome --save-dev
