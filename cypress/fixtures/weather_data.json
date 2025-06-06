@@ -1,0 +1,7 @@
+{
+  "pageHeader" : "Weather App",
+  "defaultCity" : "New York",
+  "validCity": "Delhi",
+  "invalidCity": "InvalidCity123",
+  "errorMessage": "City not found"
+}
