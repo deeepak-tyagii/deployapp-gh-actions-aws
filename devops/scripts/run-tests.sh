@@ -64,6 +64,7 @@ npm install cypress mochawesome --save-dev
 
 log "Running Cypress tests..."
 npx cypress run --config baseUrl="$CYPRESS_BASE_URL" --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true || TEST_EXIT_CODE=$?
+cat cypress/reports/mochawesome.html
 
 log "Tests completed. Cleaning up container..."
 cleanup
