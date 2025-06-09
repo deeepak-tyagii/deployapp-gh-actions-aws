@@ -1,6 +1,9 @@
 version: 0.2
 
 env:
+  secrets-manager:
+    DOCKERHUB_USERNAME: dockerhub-credentials:username
+    DOCKERHUB_PASSWORD: dockerhub-credentials:password
   variables:
     IMAGE_TAG: "latest"
 
@@ -10,6 +13,8 @@ phases:
       nodejs: 18
   pre_build:
     commands:
+      - echo "Logging in to Docker Hub..."
+      - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
       - echo "Running test script..."
       - bash devops/scripts/run-tests.sh $AWS_ACCOUNT_ID $REGION $ECR_REPO_NAME $IMAGE_TAG
   build:
