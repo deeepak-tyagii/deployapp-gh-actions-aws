@@ -1,4 +1,4 @@
-# 🌦️ Node.js Weather App (Dockerized)
+# 🌦️ Node.js Weather App
 
 A lightweight and responsive Node.js application that fetches real-time weather data using the OpenWeatherMap API. This app is containerized with Docker for easy local development and cloud deployment (e.g., AWS ECS, EC2, etc.).
 
