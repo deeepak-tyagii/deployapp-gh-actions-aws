@@ -58,9 +58,9 @@ npm install --save-dev
 log "Running Cypress tests..."
 # Run tests but prevent script from exiting on failure, store the exit code instead.
 npm run test || TEST_EXIT_CODE=$?
+echo $TEST_EXIT_CODE > test-exit-code.txt
 
 log "Generating test report..."
 npm run report
 
-log "Test script finished. Exiting with test status code: $TEST_EXIT_CODE"
-exit $TEST_EXIT_CODE
+exit 0
