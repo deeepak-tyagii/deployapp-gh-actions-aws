@@ -23,9 +23,9 @@ WORKDIR /usr/src/app
 # Copy only the compiled/built application and node_modules from builder
 COPY --from=builder /usr/src/app /usr/src/app
 
-ENV PORT=${PORT}
+ENV PORT=3000
 
-EXPOSE ${PORT}
+EXPOSE 3000
 
 CMD ["npm", "start"]
 
